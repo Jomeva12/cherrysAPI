@@ -45,15 +45,17 @@ public class SecurityConfig {
  */
     @Bean
      public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-         return http.csrf(AbstractHttpConfigurer::disable)
-             .cors(AbstractHttpConfigurer::disable)
-             .authorizeHttpRequests(request -> {
-                 request.requestMatchers("user/login", "user/forgotPassword").permitAll();// Rutas públicas sin requerir autenticación.
-                 request.requestMatchers("/rol").hasAuthority( "ADMIN");// Requiere autorización "ADMIN" para la ruta "".
-                 request.requestMatchers("/user/registrar").hasAuthority( "ADMIN");// Requiere autorización "ADMIN" para la ruta "".
+        http.csrf(AbstractHttpConfigurer::disable)
+            .cors(AbstractHttpConfigurer::disable)
+            .authorizeHttpRequests(request -> {
+              request.requestMatchers("user/login", "user/registrar", "user/forgotPassword").permitAll();// Rutas públicas sin requerir autenticación.
+              request.requestMatchers("/cancion").hasAuthority("ADMIN");// Requiere autorización "ADMIN" para la ruta "/cancion".
+           request.requestMatchers("/user/registrar").hasAuthority( "ADMIN");
+            })
+            .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);// Agrega el filtro JWT antes del filtro de autenticación por nombre de usuario y contraseña. 
 
-             }).addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class)// Agrega el filtro JWT antes del filtro de autenticación por nombre de usuario y contraseña. 
-                 .build();
+    http.cors(withDefaults());
+    return http.build();
      }
   
   
