@@ -4,6 +4,7 @@
  */
 package com.jomeva.crearapi.controller;
 
+import com.jomeva.crearapi.model.Users;
 import com.jomeva.crearapi.security.UsuarioDetailService;
 import com.jomeva.crearapi.service.UsuarioService;
 import com.jomeva.crearapi.util.CancionesUtil;
@@ -27,11 +28,11 @@ private UsuarioDetailService usuarioDetailService;
   private UsuarioService usuarioService;
 
   @PostMapping("/registrar")
-  public ResponseEntity<String> crearUsuario(@RequestBody(required = true) Map<String, String> requestMap) {
+  public ResponseEntity<String> crearUsuario(@RequestBody Users usuario) {
     
 
     try {
-     return usuarioService.registrar(requestMap);
+     return usuarioService.registrar(usuario);
     }catch(Exception e){
      e.printStackTrace();
     }

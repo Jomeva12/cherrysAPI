@@ -1,6 +1,7 @@
 C:\Users\johan\OneDrive\Escritorio\api20231021\cherry\src\main\java\com\jomeva\crearapi\security\SecurityConfig.java
 C:\Users\johan\OneDrive\Escritorio\api20231021\cherry\src\main\java\com\jomeva\crearapi\util\CancionesUtil.java
 C:\Users\johan\OneDrive\Escritorio\api20231021\cherry\src\main\java\com\jomeva\crearapi\repository\UsuarioRepository.java
+C:\Users\johan\OneDrive\Escritorio\api20231021\cherry\src\main\java\com\jomeva\crearapi\controller\RolController.java
 C:\Users\johan\OneDrive\Escritorio\api20231021\cherry\src\main\java\com\jomeva\crearapi\service\RolService.java
 C:\Users\johan\OneDrive\Escritorio\api20231021\cherry\src\main\java\com\jomeva\crearapi\security\UsuarioDetailService.java
 C:\Users\johan\OneDrive\Escritorio\api20231021\cherry\src\main\java\com\jomeva\crearapi\service\UsuarioService.java
@@ -10,6 +11,5 @@ C:\Users\johan\OneDrive\Escritorio\api20231021\cherry\src\main\java\com\jomeva\c
 C:\Users\johan\OneDrive\Escritorio\api20231021\cherry\src\main\java\com\jomeva\crearapi\security\jwt\JwtFilter.java
 C:\Users\johan\OneDrive\Escritorio\api20231021\cherry\src\main\java\com\jomeva\crearapi\CrearApiApplication.java
 C:\Users\johan\OneDrive\Escritorio\api20231021\cherry\src\main\java\com\jomeva\crearapi\security\jwt\JwtUtil.java
-C:\Users\johan\OneDrive\Escritorio\api20231021\cherry\src\main\java\com\jomeva\crearapi\controller\CancionController.java
 C:\Users\johan\OneDrive\Escritorio\api20231021\cherry\src\main\java\com\jomeva\crearapi\controller\UsuarioController.java
 C:\Users\johan\OneDrive\Escritorio\api20231021\cherry\src\main\java\com\jomeva\crearapi\repository\RolRepository.java

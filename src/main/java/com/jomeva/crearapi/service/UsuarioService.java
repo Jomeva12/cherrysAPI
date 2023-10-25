@@ -1,7 +1,7 @@
 package com.jomeva.crearapi.service;
 
 import com.jomeva.crearapi.model.Rol;
-import com.jomeva.crearapi.model.Usuario;
+import com.jomeva.crearapi.model.Users;
 import com.jomeva.crearapi.repository.UsuarioRepository;
 import com.jomeva.crearapi.security.UsuarioDetailService;
 import com.jomeva.crearapi.security.jwt.JwtUtil;
@@ -39,26 +39,23 @@ public class UsuarioService {
   public ResponseEntity<String> login(Map<String, String> requestMap) {
     log.info("Intento de inicio de sesión. Datos: {}", requestMap);
 //    try {
-     
-String email=requestMap.get("email");
-String pass=requestMap.get("password");
-      Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(email, pass));
-  
-      
-      log.info("ffffffffff {} ",authentication);
-      if (authentication.isAuthenticated()) {
- 
-        if (usuarioDetailService.getUsuarioDetail().getDisabled()) {
-          
-          
-           String token = jwtUtil.generarToken(usuarioDetailService.getUsuarioDetail().getEmail(), usuarioDetailService.getUsuarioDetail().getRol().toString());
-      
 
-                // Devuelve una respuesta JSON con el token
-                return ResponseEntity.ok("{\"token\": \"" + token + "\"}");
-       
-        }
+    String email = requestMap.get("email");
+    String pass = requestMap.get("password");
+    Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(email, pass));
+
+    log.info("ffffffffff {} ", authentication);
+    if (authentication.isAuthenticated()) {
+
+      if (usuarioDetailService.getUsuarioDetail().getDisabled()) {
+
+        String token = jwtUtil.generarToken(usuarioDetailService.getUsuarioDetail().getEmail(), usuarioDetailService.getUsuarioDetail().getRol().toString());
+
+        // Devuelve una respuesta JSON con el token
+        return ResponseEntity.ok("{\"token\": \"" + token + "\"}");
+
       }
+    }
 //    } catch (Exception e) {
 //      log.error("Error durante el inicio de sesión: {}", e.getMessage());
 //      e.printStackTrace();
@@ -68,35 +65,34 @@ String pass=requestMap.get("password");
     return new ResponseEntity<String>("{credenciales incorrectas}", HttpStatus.BAD_REQUEST);
   }
 
-  public ResponseEntity<String> registrar(Map<String, String> requestMap) {
+  public ResponseEntity<String> registrar(Users usuario) {
 
-      Usuario usuario = usuarioRepository.findByEmail(requestMap.get("email"));
-      if (Objects.isNull(usuario)) {
-        //agregarlo si no existe
-        usuario = getUsuarioFromMap(requestMap); // Obtén el usuario a partir del mapa
+    Users users = usuarioRepository.findByEmail(usuario.getEmail());
+    if (Objects.isNull(users)) {
+      //agregarlo si no existe
+      //usuario = getUsuarioFromMap(requestMap); // Obtén el usuario a partir del mapa
+      users = usuario;
+      // Encripta la contraseña antes de guardarla
+      String rawPassword = usuario.getPassword();
+      String hashedPassword = BCrypt.hashpw(rawPassword, BCrypt.gensalt());
+      users.setPassword(hashedPassword);
 
-        // Encripta la contraseña antes de guardarla
-        String rawPassword = requestMap.get("password");
-        String hashedPassword = BCrypt.hashpw(rawPassword, BCrypt.gensalt());
-        usuario.setPassword(hashedPassword);
+      usuarioRepository.save(users); // Guarda el usuario en la base de datos
 
-        usuarioRepository.save(usuario); // Guarda el usuario en la base de datos
+      return CancionesUtil.getResponseEntity("Usuario registrado con existo", HttpStatus.CREATED);
+    } else {
+      return CancionesUtil.getResponseEntity("El usuario con este email ya existe", HttpStatus.BAD_REQUEST);
+    }
 
-        return CancionesUtil.getResponseEntity("Usuario registrado con existo", HttpStatus.CREATED);
-      } else {
-        return CancionesUtil.getResponseEntity("El usuario con este email ya existe", HttpStatus.BAD_REQUEST);
-      }
-    
     // } catch (Exception e) {
     //System.out.println("Error al crear usuario " + e.toString());
     // }
-
     //return CancionesUtil.getResponseEntity("Error en los datos", HttpStatus.INTERNAL_SERVER_ERROR);
   }
 
-  private Usuario getUsuarioFromMap(Map<String, String> requestMap) {
-    Usuario usuario = new Usuario();
-    
+  private Users getUsuarioFromMap(Map<String, String> requestMap) {
+    Users usuario = new Users();
+
     usuario.setUserName(requestMap.get("userName"));
     usuario.setEmail(requestMap.get("email"));
     usuario.setNombres(requestMap.get("nombres"));
@@ -105,21 +101,20 @@ String pass=requestMap.get("password");
 
     String disabledValue = requestMap.get("disabled");
     if (disabledValue != null) {
-        usuario.setDisabled(Boolean.parseBoolean(disabledValue));
+      usuario.setDisabled(Boolean.parseBoolean(disabledValue));
     }
 
     String rolValue = requestMap.get("rol");
     if (rolValue != null) {
-        Rol rol = new Rol(rolValue); 
-           usuario.setRol(rol);
+      Rol rol = new Rol(rolValue);
+      usuario.setRol(rol);
     }
     return usuario;
   }
-    public Usuario getUsuario(Long id) {
-    Optional<Usuario> usuario = usuarioRepository.findById(id);
+
+  public Users getUsuario(Long id) {
+    Optional<Users> usuario = usuarioRepository.findById(id);
     return usuario.get();
   }
-
-
 
 }

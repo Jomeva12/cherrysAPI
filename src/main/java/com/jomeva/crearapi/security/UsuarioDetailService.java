@@ -5,7 +5,7 @@
 package com.jomeva.crearapi.security;
 
 import com.jomeva.crearapi.model.Rol;
-import com.jomeva.crearapi.model.Usuario;
+import com.jomeva.crearapi.model.Users;
 import com.jomeva.crearapi.repository.RolRepository;
 import com.jomeva.crearapi.repository.UsuarioRepository;
 import java.util.ArrayList;
@@ -35,7 +35,7 @@ public class UsuarioDetailService implements UserDetailsService {
   private UsuarioRepository usuarioRepository;
      @Autowired
 private RolRepository rolRepository;
-  private Usuario usuario;
+  private Users usuario;
 
   @Override
   public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
@@ -67,7 +67,7 @@ private RolRepository rolRepository;
     }
   }
 
-  public Usuario getUsuarioDetail(){
+  public Users getUsuarioDetail(){
     return usuario;
   }
 }

@@ -1,7 +1,7 @@
 package com.jomeva.crearapi.service;
 
 import com.jomeva.crearapi.model.Rol;
-import com.jomeva.crearapi.model.Usuario;
+import com.jomeva.crearapi.model.Users;
 import com.jomeva.crearapi.repository.RolRepository;
 import com.jomeva.crearapi.repository.UsuarioRepository;
 import com.jomeva.crearapi.security.UsuarioDetailService;

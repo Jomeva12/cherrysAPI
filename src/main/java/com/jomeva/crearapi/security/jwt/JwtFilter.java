@@ -52,7 +52,7 @@ public class JwtFilter extends OncePerRequestFilter {
   protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
     // Registra información de la ruta de la solicitud para propósitos de registro,login u otro acceso.
     log.info("pathhh {}", request.getServletPath());
-    if (request.getServletPath().matches("/user/login|/user/forgotPassword|/user/registrar")) {
+    if (request.getServletPath().matches("/user/login|/user/forgotPassword")) {
       // Las rutas públicas no requieren autenticación, por lo que se permite el acceso sin procesar el token JWT.
       filterChain.doFilter(request, response);
 

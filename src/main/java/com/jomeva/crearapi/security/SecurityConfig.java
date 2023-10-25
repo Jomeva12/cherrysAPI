@@ -48,8 +48,9 @@ public class SecurityConfig {
          return http.csrf(AbstractHttpConfigurer::disable)
              .cors(AbstractHttpConfigurer::disable)
              .authorizeHttpRequests(request -> {
-                 request.requestMatchers("user/login", "user/registrar", "user/forgotPassword").permitAll();// Rutas públicas sin requerir autenticación.
-                 request.requestMatchers("/rol").hasAuthority( "ADMIN");// Requiere autorización "ADMIN" para la ruta "/cancion".
+                 request.requestMatchers("user/login", "user/forgotPassword").permitAll();// Rutas públicas sin requerir autenticación.
+                 request.requestMatchers("/rol").hasAuthority( "ADMIN");// Requiere autorización "ADMIN" para la ruta "".
+                 request.requestMatchers("/user/registrar").hasAuthority( "ADMIN");// Requiere autorización "ADMIN" para la ruta "".
 
              }).addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class)// Agrega el filtro JWT antes del filtro de autenticación por nombre de usuario y contraseña. 
                  .build();
