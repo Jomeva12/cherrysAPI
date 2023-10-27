@@ -7,7 +7,7 @@ package com.jomeva.crearapi.controller;
 import com.jomeva.crearapi.model.Users;
 import com.jomeva.crearapi.security.UsuarioDetailService;
 import com.jomeva.crearapi.service.UsuarioService;
-import com.jomeva.crearapi.util.CancionesUtil;
+import com.jomeva.crearapi.util.CherryUtils;
 import java.util.Map;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,7 +36,7 @@ private UsuarioDetailService usuarioDetailService;
     }catch(Exception e){
      e.printStackTrace();
     }
-      return CancionesUtil.getResponseEntity("No se pudo registrar", HttpStatus.BAD_REQUEST);
+      return CherryUtils.getResponseEntity("No se pudo registrar", HttpStatus.BAD_REQUEST);
     }
 
    @PostMapping("/login")
@@ -49,7 +49,7 @@ private UsuarioDetailService usuarioDetailService;
     } catch (Exception e) {
         log.error("Error durante el inicio de sesión: {}", e.getMessage());
         e.printStackTrace();
-        return CancionesUtil.getResponseEntity("No se pudo loguear", HttpStatus.BAD_REQUEST);
+        return CherryUtils.getResponseEntity("No se pudo loguear", HttpStatus.BAD_REQUEST);
     }
   }
 }

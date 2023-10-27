@@ -5,7 +5,7 @@ import com.jomeva.crearapi.model.Users;
 import com.jomeva.crearapi.repository.UsuarioRepository;
 import com.jomeva.crearapi.security.UsuarioDetailService;
 import com.jomeva.crearapi.security.jwt.JwtUtil;
-import com.jomeva.crearapi.util.CancionesUtil;
+import com.jomeva.crearapi.util.CherryUtils;
 
 import java.util.Map;
 import java.util.Objects;
@@ -20,6 +20,8 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.stereotype.Component;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 
 @Component
 @Slf4j
@@ -35,6 +37,7 @@ public class UsuarioService {
 
   @Autowired
   private JwtUtil jwtUtil;
+
 
   public ResponseEntity<String> login(Map<String, String> requestMap) {
     log.info("Intento de inicio de sesión. Datos: {}", requestMap);
@@ -79,9 +82,9 @@ public class UsuarioService {
 
       usuarioRepository.save(users); // Guarda el usuario en la base de datos
 
-      return CancionesUtil.getResponseEntity("Usuario registrado con existo", HttpStatus.CREATED);
+      return CherryUtils.getResponseEntity("Usuario registrado con existo", HttpStatus.CREATED);
     } else {
-      return CancionesUtil.getResponseEntity("El usuario con este email ya existe", HttpStatus.BAD_REQUEST);
+      return CherryUtils.getResponseEntity("El usuario con este email ya existe", HttpStatus.BAD_REQUEST);
     }
 
     // } catch (Exception e) {

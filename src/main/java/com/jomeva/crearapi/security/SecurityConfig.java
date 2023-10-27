@@ -6,6 +6,7 @@ import java.util.Arrays;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.ProviderManager;
 import org.springframework.security.config.Customizer;
@@ -49,8 +50,10 @@ public class SecurityConfig {
             .cors(AbstractHttpConfigurer::disable)
             .authorizeHttpRequests(request -> {
               request.requestMatchers("user/login", "user/registrar", "user/forgotPassword").permitAll();// Rutas públicas sin requerir autenticación.
-              request.requestMatchers("/cancion").hasAuthority("ADMIN");// Requiere autorización "ADMIN" para la ruta "/cancion".
-           request.requestMatchers("/user/registrar").hasAuthority( "ADMIN");
+              request.requestMatchers("/rol").hasAuthority("ADMIN");// Requiere autorización "ADMIN" para la ruta "/cancion".
+            request.requestMatchers("/user/registrar").hasAuthority( "ADMIN");
+             request.requestMatchers("/cv").hasAuthority( "ADMIN"); 
+              request.requestMatchers("/cv/{id}").hasAuthority( "ADMIN");
             })
             .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);// Agrega el filtro JWT antes del filtro de autenticación por nombre de usuario y contraseña. 
 

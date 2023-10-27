@@ -6,9 +6,12 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.NamedQuery;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
+import jakarta.persistence.UniqueConstraint;
 import java.io.Serializable;
 import lombok.Data;
 import org.hibernate.annotations.DynamicInsert;
@@ -40,7 +43,7 @@ public class Users {
   private String nombres; 
   
   @ManyToOne
-  @JoinColumn(name = "rol") // Nombre de la columna que almacena la relación en la tabla de Usuario
+  @JoinColumn(name = "rol") 
   private Rol rol; 
     @Column(name = "created")
   private String created;
@@ -50,5 +53,9 @@ public class Users {
   
 @Column(name = "userEdit")
  private String userEdit;
+
+
+  @OneToOne(mappedBy = "users") // Mapea la relación en la clase Curriculum
+  private Curriculum curriculum;
 
 }

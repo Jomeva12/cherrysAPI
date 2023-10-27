@@ -31,7 +31,7 @@ public class RolController {
   private RolService rolService;
   
   @PostMapping
-  public ResponseEntity<String>  createCancion(@RequestBody(required = true) Map<String, String> requestMap){   
+  public ResponseEntity<String>  createRol(@RequestBody(required = true) Map<String, String> requestMap){   
     return rolService.crearRol(requestMap);
   }
     

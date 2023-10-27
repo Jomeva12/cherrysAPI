@@ -6,7 +6,7 @@ import com.jomeva.crearapi.repository.RolRepository;
 import com.jomeva.crearapi.repository.UsuarioRepository;
 import com.jomeva.crearapi.security.UsuarioDetailService;
 import com.jomeva.crearapi.security.jwt.JwtUtil;
-import com.jomeva.crearapi.util.CancionesUtil;
+import com.jomeva.crearapi.util.CherryUtils;
 
 import java.util.Map;
 import java.util.Objects;
@@ -34,7 +34,7 @@ private RolRepository rolRepository;
   public ResponseEntity<String> crearRol(Map<String, String> requestMap) {
         Rol rol = getRolFromMap(requestMap);
     rolRepository.save(rol);
-    return CancionesUtil.getResponseEntity("Rol registrado con éxito", HttpStatus.CREATED);
+    return CherryUtils.getResponseEntity("Rol registrado con éxito", HttpStatus.CREATED);
     
   }
 
