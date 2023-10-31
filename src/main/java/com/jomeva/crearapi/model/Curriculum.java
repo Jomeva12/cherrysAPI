@@ -1,5 +1,7 @@
 package com.jomeva.crearapi.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -62,6 +64,8 @@ public class Curriculum {
   @Column(name = "birthDate")
   private String birthDate;
   
+   @Column(name = "disabled")
+  private Boolean disabled;  
  
   @Column(name = "create_date")
   private String createDate;
@@ -72,7 +76,8 @@ public class Curriculum {
   @Column(name = "userCreate")
   private String userCreate;
   
-  @JsonIgnore
+  //@JsonIgnore
+  @JsonBackReference 
   @OneToOne
   @JoinColumn(name = "iduser") // Mapea la relación en la clase Curriculum
   private Users users;

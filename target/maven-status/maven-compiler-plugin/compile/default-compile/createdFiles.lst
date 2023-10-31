@@ -12,6 +12,7 @@ com\jomeva\crearapi\model\Rol.class
 com\jomeva\crearapi\constantes\ListaDeCancionesConstantes.class
 com\jomeva\crearapi\service\UsuarioService.class
 com\jomeva\crearapi\security\jwt\JwtFilter.class
+com\jomeva\crearapi\util\ServiceResponse.class
 com\jomeva\crearapi\util\CherryUtils.class
 com\jomeva\crearapi\security\UsuarioDetailService.class
 com\jomeva\crearapi\security\jwt\JwtUtil.class

@@ -1,4 +1,3 @@
-
 package com.jomeva.crearapi.security;
 
 import com.jomeva.crearapi.security.jwt.JwtFilter;
@@ -25,10 +24,9 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig {
-  
+
   @Autowired
   private UsuarioDetailService usuarioDetailService;
-
 
   @Bean
   public PasswordEncoder passwordEncoder() {
@@ -37,33 +35,39 @@ public class SecurityConfig {
 
   @Autowired
   private JwtFilter jwtFilter;
+
   /**
- * Configura una cadena de filtros de seguridad para gestionar la seguridad y autorización de las solicitudes HTTP.
- *
- * @param http Configuración de seguridad de Spring Security.
- * @return Una instancia de SecurityFilterChain configurada.
- * @throws Exception Si se produce una excepción durante la configuración.
- */
-    @Bean
-     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-        http.csrf(AbstractHttpConfigurer::disable)
+   * Configura una cadena de filtros de seguridad para gestionar la seguridad y
+   * autorización de las solicitudes HTTP.
+   *
+   * @param http Configuración de seguridad de Spring Security.
+   * @return Una instancia de SecurityFilterChain configurada.
+   * @throws Exception Si se produce una excepción durante la configuración.
+   */
+  @Bean
+  public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+    http.csrf(AbstractHttpConfigurer::disable)
             .cors(AbstractHttpConfigurer::disable)
             .authorizeHttpRequests(request -> {
               request.requestMatchers("user/login", "user/registrar", "user/forgotPassword").permitAll();// Rutas públicas sin requerir autenticación.
               request.requestMatchers("/rol").hasAuthority("ADMIN");// Requiere autorización "ADMIN" para la ruta "/cancion".
-            request.requestMatchers("/user/registrar").hasAuthority( "ADMIN");
-             request.requestMatchers("/cv").hasAuthority( "ADMIN"); 
-              request.requestMatchers("/cv/{id}").hasAuthority( "ADMIN");
+              request.requestMatchers("/user/registrar").hasAuthority("ADMIN");
+              request.requestMatchers("/user").hasAuthority("ADMIN");
+              request.requestMatchers("/user/{id}").hasAuthority("ADMIN");
+              request.requestMatchers("/user/getUser/{email}").hasAuthority("ADMIN");
+              request.requestMatchers("/cv").hasAuthority("ADMIN");
+              request.requestMatchers("/cv/{id}").hasAuthority("ADMIN");
+              request.requestMatchers("/rol/{type}").hasAuthority("ADMIN");
+              request.requestMatchers("/rol").hasAuthority("ADMIN");
             })
             .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);// Agrega el filtro JWT antes del filtro de autenticación por nombre de usuario y contraseña. 
 
     http.cors(withDefaults());
     return http.build();
-     }
-  
-  
+  }
+
   @Bean
-  public AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration) throws Exception{
+  public AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration) throws Exception {
     return authenticationConfiguration.getAuthenticationManager();
   }
 }

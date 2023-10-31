@@ -18,23 +18,27 @@ import lombok.Data;
 @Entity
 @Table(name = "rol")
 public class Rol {
-  
+
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
-  
-    @Column(name = "type")
+
+  @Column(name = "type")
   private String type;
-    @Column(name = "description")
+  
+  @Column(name = "description")
   private String description;
+  
+@Column(name = "disabled")
+  private Boolean disabled;
 
   public Rol(String type) {
     this.type = type;
   }
-    public Rol() {
-   
+  
+
+  public Rol() {
+
   }
-    
- 
 
 }

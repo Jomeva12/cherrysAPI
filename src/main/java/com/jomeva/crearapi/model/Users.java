@@ -17,7 +17,6 @@ import lombok.Data;
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
 
-
 //@NamedQuery(name = "users.findByEmail", query = "select u from users u where u.email = :email")
 @NamedQuery(name = "Users.findByEmail", query = "select u from Users u where u.email = :email")
 
@@ -27,33 +26,32 @@ import org.hibernate.annotations.DynamicUpdate;
 @Entity
 @Table(name = "users")
 public class Users {
-  
+
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long iduser;
-    @Column(name = "userName")
+  @Column(name = "userName")
   private String userName;
-    @Column(name = "email")
+  @Column(name = "email")
   private String email;
-     @Column(name = "password")
+  @Column(name = "password")
   private String password;
-      @Column(name = "disabled")
-  private Boolean disabled;      
+  @Column(name = "disabled")
+  private Boolean disabled;
   @Column(name = "nombres")
-  private String nombres; 
-  
+  private String nombres;
+
   @ManyToOne
-  @JoinColumn(name = "rol") 
-  private Rol rol; 
-    @Column(name = "created")
+  @JoinColumn(name = "rol")
+  private Rol rol;
+  @Column(name = "created")
   private String created;
-  
+
   @Column(name = "edit")
   private String edit;
-  
-@Column(name = "userEdit")
- private String userEdit;
 
+  @Column(name = "userEdit")
+  private String userEdit;
 
   @OneToOne(mappedBy = "users") // Mapea la relación en la clase Curriculum
   private Curriculum curriculum;
