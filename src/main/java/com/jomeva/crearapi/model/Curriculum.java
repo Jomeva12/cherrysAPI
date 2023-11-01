@@ -24,7 +24,6 @@ public class Curriculum {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
-
   @Column(name = "firstName")
   private String firstName;
 
@@ -76,12 +75,17 @@ public class Curriculum {
   @Column(name = "userCreate")
   private String userCreate;
   
-  //@JsonIgnore
+ 
   @JsonBackReference 
   @OneToOne
   @JoinColumn(name = "iduser") // Mapea la relación en la clase Curriculum
   private Users users;
 
+    @JsonBackReference 
+  @ManyToOne
+  @JoinColumn(name = "idCargo") // Mapea la relación en la clase Curriculum
+  private Cargo cargo;
+    
   @Column(name = "documentType")
   private String documentType;
 
