@@ -1,8 +1,10 @@
 package com.jomeva.crearapi.service;
 
+import com.jomeva.crearapi.model.Area;
 import com.jomeva.crearapi.model.Cargo;
 import com.jomeva.crearapi.model.Rol;
 import com.jomeva.crearapi.model.Users;
+import com.jomeva.crearapi.repository.AreaRespository;
 import com.jomeva.crearapi.repository.CargoRepository;
 import com.jomeva.crearapi.repository.RolRepository;
 import com.jomeva.crearapi.repository.UsuarioRepository;
@@ -33,21 +35,16 @@ public class CargoService {
 
   @Autowired
   private CargoRepository cargoRepository;
-
-  public ResponseEntity<String> crearCargo(Map<String, String> requestMap) {
-    Cargo cargo = getCargoFromMap(requestMap);
-   
+  @Autowired
+  private AreaRespository areaRespository;
+  public ResponseEntity<String> crearCargo(Cargo cargo) {
+    //Cargo cargo = getCargoFromMap(requestMap);
+   log.info("cargo {} ",cargo);
     cargoRepository.save(cargo);
     return CherryUtils.getResponseEntity("Cargo registrado con éxito", HttpStatus.CREATED);
 
   }
 
-  private Cargo getCargoFromMap(Map<String, String> requestMap) {
-    Cargo cargo = new Cargo();  
-    cargo.setDescription(requestMap.get("description"));
-    cargo.setDisabled(Boolean.parseBoolean(requestMap.get("disabled")));
-    return cargo;
-  }
 
   public ResponseEntity<String> deleteCargoByName(String name) {
     Cargo cargo = cargoRepository.findByName(name);
@@ -63,30 +60,48 @@ public class CargoService {
 
   }
 
-  public ResponseEntity<String> updateRol(Cargo updatedCargo) {
-    // Verificar si el rol con el ID proporcionado existe en la base de datos
+public ResponseEntity<String> updateCargo(Cargo updatedCargo) {
+    // Verificar si el cargo con el ID proporcionado existe en la base de datos
     Optional<Cargo> existingCargo = cargoRepository.findById(updatedCargo.getId());
 
     if (existingCargo.isPresent()) {
-      Cargo cargo = existingCargo.get();
-      // Actualizar los campos necesarios del rol existente con los valores proporcionados
-      if (updatedCargo.getName() != null) {
-        cargo.setName(updatedCargo.getName());
-      }
-      if (updatedCargo.getDescription() != null) {
-        cargo.setDescription(updatedCargo.getDescription());
-      }
-      if (updatedCargo.getDisabled() != null) {
-        cargo.setDisabled(updatedCargo.getDisabled());
-      }
+        Cargo cargo = existingCargo.get();
 
-      cargoRepository.save(cargo);
-      return CherryUtils.getResponseEntity("ctulizado el Cargo: ", HttpStatus.CREATED);
+        if (updatedCargo.getTitle() != null) {
+            cargo.setTitle(updatedCargo.getTitle());
+        }
+        if (updatedCargo.getName() != null) {
+            cargo.setName(updatedCargo.getName());
+        }
+        if (updatedCargo.getDescription() != null) {
+            cargo.setDescription(updatedCargo.getDescription());
+        }
+        if (updatedCargo.getDisabled() != null) {
+            cargo.setDisabled(updatedCargo.getDisabled());
+        }
+        if (updatedCargo.getStartDate() != null) {
+            cargo.setStartDate(updatedCargo.getStartDate());
+        }
+        if (updatedCargo.getFinalDate() != null) {
+            cargo.setFinalDate(updatedCargo.getFinalDate());
+        }
+        if (updatedCargo.getSalary() != null) {
+            cargo.setSalary(updatedCargo.getSalary());
+        }
+        if (updatedCargo.getArea() != null && updatedCargo.getArea().getId() != null) {
+            Area updatedArea = areaRespository.findById(updatedCargo.getArea().getId()).orElse(null);
+            if (updatedArea != null) {
+                cargo.setArea(updatedArea);
+            }
+        }
+
+        cargoRepository.save(cargo);
+        return CherryUtils.getResponseEntity("Actualizado el Cargo: ", HttpStatus.CREATED);
     } else {
-      return CherryUtils.getResponseEntity("Error al actualizar el Cargo: ", HttpStatus.INTERNAL_SERVER_ERROR);
+        return CherryUtils.getResponseEntity("Error al actualizar el Cargo: ", HttpStatus.INTERNAL_SERVER_ERROR);
     }
-   
-  }
+}
+
 
   public List<Cargo> getAllCargo() {
     log.info("dadda {}", "ggg");

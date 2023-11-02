@@ -50,9 +50,7 @@ public class RolService {
 
   public ResponseEntity<String> deleteRolByType(String type) {
     Rol rol = rolRepository.findByType(type);
-
     if (rol != null) {
-
       rol.setDisabled(true);
       rolRepository.save(rol);
       return CherryUtils.getResponseEntity("Rol eliminado con éxito", HttpStatus.OK);

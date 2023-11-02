@@ -75,13 +75,16 @@ public class Curriculum {
   @Column(name = "userCreate")
   private String userCreate;
   
+  @Column(name = "pdfCurriculum")
+  private String pdfCurriculum;
+  
  
   @JsonBackReference 
   @OneToOne
   @JoinColumn(name = "iduser") // Mapea la relación en la clase Curriculum
   private Users users;
 
-    @JsonBackReference 
+  @JsonBackReference 
   @ManyToOne
   @JoinColumn(name = "idCargo") // Mapea la relación en la clase Curriculum
   private Cargo cargo;

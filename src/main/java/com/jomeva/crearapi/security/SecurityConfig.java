@@ -59,6 +59,10 @@ public class SecurityConfig {
               request.requestMatchers("/cv/{id}").hasAuthority("ADMIN");
               request.requestMatchers("/rol/{type}").hasAuthority("ADMIN");
               request.requestMatchers("/rol").hasAuthority("ADMIN");
+              request.requestMatchers("/cargo/{name}").hasAuthority("ADMIN");
+              request.requestMatchers("/cargo").hasAuthority("ADMIN");
+              request.requestMatchers("/area/{name}").hasAuthority("ADMIN");
+              request.requestMatchers("/area").hasAuthority("ADMIN");
             })
             .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);// Agrega el filtro JWT antes del filtro de autenticación por nombre de usuario y contraseña. 
 
